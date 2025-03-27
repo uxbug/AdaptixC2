@@ -8,7 +8,7 @@ DIST_DIR := "objects"
 FILES_DIR := "files"
 
 # Detect CPU cores for parallel compilation
-NPROC := $(shell nproc)
+NPROC := $(shell if command -v nproc > /dev/null; then nproc; else sysctl -n hw.logicalcpu; fi)
 
 # Security-related compilation flags
 SECURITY_FLAGS := -fno-stack-protector \
