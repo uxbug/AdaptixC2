@@ -14,7 +14,9 @@ clean:
 server: prepare
 	@ echo "[*] Building adaptixserver..."
 	@ cd AdaptixServer && go build -ldflags="-s -w" -o adaptixserver > /dev/null 2>&1       # for static build use CGO_ENABLED=0
+ifeq ($(shell uname), Linux)
 	@ sudo setcap 'cap_net_bind_service=+ep' AdaptixServer/adaptixserver
+endif
 	@ mv AdaptixServer/adaptixserver ./$(DIST_DIR)/
 	@ cp AdaptixServer/ssl_gen.sh AdaptixServer/profile.json AdaptixServer/404page.html ./$(DIST_DIR)/
 	@ echo "[+] done"
